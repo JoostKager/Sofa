@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:insert="general :: headerfiles"/>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+<h1>Er ging iets mis</h1><br>
+<h1><div style="align:left; text-align:center" onClick="javascript:history.go(-1)">Ga terug</div></h1>
+<img th:src="@{/images/errorpicture.jpg}" alt="picture of thrashed couches and stuff" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;"/>
+
+<div th:insert="general :: footer"/>
+</body>
+</html>

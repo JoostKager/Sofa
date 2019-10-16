@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:insert="general :: headerfiles"/>
+    <title>Bevestig betaling</title>
+</head>
+<body>
+<div th:insert="general :: header"/>
+
+<div class="new-client-container">
+    <div class="w3-container">
+
+        <h1 style="text-align: left">Bevestig transactie</h1>
+
+        <form action="#" th:action="@{confirmPayment}" th:object="${transaction}" method="post">
+            <table class="transfer-table">
+
+                <tr>
+                    <td>naam begunstigde</td>
+                    <td><input readonly type="text" th:field="*{name}"></td>
+                </tr>
+                <tr>
+                    <td>bedrag</td>
+                    <td><input readonly type="text" th:field="*{amount}"></td>
+
+                </tr>
+                <tr>
+                    <td> omschrijving</td>
+                    <td><input readonly type="text" th:field="*{description}"></td>
+                <tr>
+                    <td>Iban Begunstigde</td>
+                    <td><input readonly type="text" th:field="*{creditAccount}"></td>
+                </tr>
+            </table>
+            <div style="position:relative; top:20px; right: 200px;">
+                <input type="hidden" th:field="*{debetAccount}">
+                <p>voer uw Pincode in</p><input type="text" th:field="*{pin}">
+                <input type="submit" value="Bevestig betaling">
+            </div>
+        </form>
+        <button style="position:relative;top:20px;right:119px;margin:10px " onClick="javascript:history.go(-1)">Pas
+            betaling aan
+        </button>
+    </div>
+</div>
+</body>
+</html>

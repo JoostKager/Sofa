@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:insert="general :: headerfiles"/>
+    <title>Receive connecting code</title>
+</head>
+<body>
+<div th:insert="general :: header"/>
+<div class="text-container">
+    <h1>Vijf cijferige koppelcode voor <span th:text="${bussinessAccount.iban}">iban</span></h1>
+</div>
+<div class="text-container">
+    <p> Code graag aan winkelier geven</p>
+</div>
+<div class="new-client-container">
+    <div class="form-container">
+        <tabel>
+            <tr>
+                <td> Vijf cijferige koppelcode</td>
+                <td><span th:text="${fiveDigits}"/></td>
+            </tr>
+        </tabel>
+    </div>
+    <form action="#" th:action="@{loadEmployeeViewAccountManager}">
+        <input type="submit" value="Nog een automaat koppelen">
+    </form>
+</div>
+
+</body>
+</html>

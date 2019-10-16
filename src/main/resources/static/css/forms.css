@@ -1,0 +1,60 @@
+.new_client {
+  display: flex;
+  overflow-y: scroll;
+  padding-bottom: 2.5rem;
+  padding-top: 2.5rem;
+  align: center;
+  margin: auto;
+}
+
+.new_client input {
+  color:#d5dfe5;
+  background-color: #961540;
+  margin: 0 .25rem;
+  min-width: 200px;
+  border: 1px solid #eee;
+  border-left: 3px solid;
+  border-radius: 5px;
+  transition: border-color .5s ease-out;
+  text-align: center;
+}
+.new_client input:optional {
+  color: #d5dfe5;
+  border-left-color: #999;
+}
+.new_client input:required {
+  color: #d5dfe5;
+  border-left-color: lightgreen;
+}
+.new_client input:invalid {
+  color: #d5dfe5;
+  border-left-color: salmon;
+}
+.input-list{
+  color: #d5dfe5;
+}
+.input-form {
+  color: #d5dfe5;
+  min-width: 200px;
+  min-height: 50px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.form-container {
+  display: inline-block;
+  max-width: 50%;
+  margin: 12px
+}
+
+.new-client-container {
+  text-align: center;
+}
+
+.w3-container{
+  display: inline-block;
+  max-width: 1000px;
+
+}

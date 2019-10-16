@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Sofa Home</title>
+    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/default-loggedout.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/caroussel.css}">
+
+
+</head>
+<body>
+<!-- nav general-frontend -->
+<div class="body-div">
+    <div class="content-wrap">
+        <div class="nav">
+            <ul>
+                <li><a href="index" class="link">Home</a></li>
+                <li><a href="login" class="link">Login</a></li>
+                <li><a href="nieuweklant" class="link">Nieuwe klant</a></li>
+                <li><a href="login_medewerker" class="link">Werknemers</a></li>
+            </ul>
+        </div>
+
+        <div class="slideshow-container">
+
+            <!-- Full-width images with number and caption text -->
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 2</div>
+                <img class="image" th:src="@{/images/OldsofaCaroussel1.jpg}" style="width:100%">
+                <div class="text">Uw geld zit lekker bij Sofa</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 2</div>
+                <img class="image" th:src="@{/images/DogSofaCaroussel2.jpg}" style="width:100%">
+                <div class="text">Sofa, zo goed</div>
+            </div>
+
+
+            <!-- The dots/circles -->
+            <div style="text-align:center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+            </div>
+        </div>
+
+        <h1>Welkom bij Sofa</h1>
+
+        <main class="flex-center">
+            <div>
+                Welkom op de website van Sofa. Een bank die het graag anders doet dan anderen.
+                Wij graaien harder en beter dan de rest. Uw geld is in geen geval veilig bij ons.
+            </div>
+            <div>
+                Helaas staat onze website nog in de steigers,
+                maar zeer binnenkort zullen we volledig operationeel zijn en nemen wij graag uw geld aan.
+            </div>
+        </main>
+
+        <div class="footer-div">
+            <footer class="footer">
+                <div class="footer-container">
+                    <div class="new-client-container">Sofa bank is een project van studenten van de HvA,
+                        omscholingstraject Make IT Work.
+                        Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok
+                        & Aat Niehot
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+    <script>
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            setTimeout(showSlides, 6000); // Change image every 6 seconds
+        }
+    </script>
+
+    <br>
+
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:insert="general :: headerfiles"/>
+    <title>Employee View</title>
+</head>
+<body>
+<div th:insert="general :: header"/>
+​
+
+<h1 style="text-align: left;">Welkom <span th:text="${sessionemployee.getFullNameUser()}"/></h1>
+
+<div class="grid-container">
+    <div class="top-ten-highest-tables">
+
+        ​
+        <form action="#" th:action="@{accountOverviewHandler}" method="post"
+              onsubmit="return validateForm();">
+
+            <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
+                <h7>Rekeningen met het hoogste saldo</h7>
+                <table>
+                    ​
+                    <tr>
+                        <td>IBAN</td>
+                        <td>Naam</td>
+                        <td>Saldo</td>
+                    </tr>
+
+                    <tr th:each="BusinessAccount : ${tenHighestBalance}">
+                        <td>
+                            <a th:href="@{accountOverviewHandler(id=${BusinessAccount.id})}"><span
+                                    th:text="${BusinessAccount.Iban}"/></a></td>
+                        <td><span th:text="${BusinessAccount.owners.get(0).getLastName()}"/></td>
+                        <td><span th:text="${BusinessAccount.balance}"/></td>
+                    </tr>
+                </table>
+            </div>
+            ​
+
+            <div th:unless="${#lists.isEmpty(tenMostActive)}">
+                <h7>De tien meest actieve klanten</h7>
+                <table>
+                    ​
+                    <tr>
+                        <td>KlantId</td>
+                        <td>Naam</td>
+                        <td>Transacties</td>
+                    </tr>
+                    <tr th:each="Client : ${tenMostActive}">
+                        <td><span th:text="${Client.getId()}"/></td>
+                        <td><a th:href="@{tenMostActiveHandler(id=${Client.getId()})}"><span
+                                th:text="${Client.getLastName()}"/></a></td>
+                        <td><span th:text="${Client.getTotalNumberOfTransactions()}"/></td>
+
+
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+    ​
+    <form class="average-per-sector" th:unless="${#lists.isEmpty(balancePerSector)}">
+        <h7>Gemiddelde per sector</h7>
+        <table>
+            <tr>
+                <td>Sector</td>
+                <td>Gemiddeld saldo</td>
+            </tr>
+            ​
+            <tr th:each="balancePerSectorData : ${balancePerSector}">
+                <td><span th:text="${balancePerSectorData.sector}"></span></td>
+                <td><span th:text="${balancePerSectorData.averageBalance}"></span></td>
+                ​
+            </tr>
+        </table>
+    </form>
+
+</div>
+​
+
+
+</body>
+</html>

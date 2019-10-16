@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:insert="general :: headerfiles"/>
+    <title>Account Overview</title>
+</head>
+<body>
+
+<div th:insert="general :: header"/>
+
+
+<div class="grid-container">
+    <div class="clientdata">
+        <h8>Klant met id: <span th:text="${client.id}"/></h8>
+        <table>
+            <tr>
+                <th>Gebruikersnaam:</th>
+                <td><span th:text="${client.username}"/></td>
+            </tr>
+            <tr>
+                <th>Voornaam:</th>
+                <td><span th:text="${client.firstName}"/></td>
+            </tr>
+            <tr>
+                <th>Tussenvoegsel:</th>
+                <td><span th:text="${client.prefix}"/></td>
+            </tr>
+            <tr>
+                <th>Achternaam:</th>
+                <td><span th:text="${client.lastName}"/></td>
+            </tr>
+            <tr>
+                <th>Straat:</th>
+                <td><span th:text="${client.getAddress().getStreet()}"/></td>
+            </tr>
+            <tr>
+                <th>Huisnummer:</th>
+                <td><span th:text="${client.getAddress().getHouseNumber()}"/></td>
+            </tr>
+            <tr>
+                <th>Postcode:</th>
+                <td><span th:text="${client.getAddress().getZipCode()}"/></td>
+            </tr>
+            <tr>
+                <th>Stad:</th>
+                <td><span th:text="${client.getAddress().getCity()}"/></td>
+            </tr>
+            <tr>
+                <th>BSN:</th>
+                <td><span th:text="${client.ssn}"/></td>
+            </tr>
+            <tr>
+                <th>Emailadres:</th>
+                <td><span th:text="${client.email}"/></td>
+            </tr>
+            <tr>
+                <th>telefoonnummer</th>
+                <td><span th:text="${client.telephoneNr}"/></td>
+            </tr>
+            <tr>
+                <th>Geboortedatum:</th>
+                <td><span th:text="${client.birthday}"/></td>
+            </tr>
+            <tr>
+                <th>Geslacht:</th>
+                <td><span th:text="${client.gender}"/></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="accounttables">
+        <form action="#" th:action="@{privateAccountListHandlerForEmployee}" th:object="${client}" method="post"
+              onsubmit="return validateForm();">
+            <h8>Particuliere rekeningen</h8>
+            <table>
+                <tr>
+                    <th>Rekeningnummer</th>
+                    <th>Saldo</th>
+                </tr>
+                <tr th:each="PrivateAccount: ${listPrivateAccounts}">
+                    <td>
+                        <a th:href="@{privateAccountListHandlerForEmployee(id=${PrivateAccount.id})}"><span
+                                th:text="${PrivateAccount.iban}"/></a>
+
+                    </td>
+
+                    <td><a><span th:text="${PrivateAccount.balance}"/></a></td>
+                </tr>
+            </table>
+        </form>
+        <br>
+
+
+        <form action="#" th:action="@{businessAccountListHandler}" th:object="${client}" method="post"
+              onsubmit="return validateForm();">
+            <h8>Zakelijke rekeningen</h8>
+            <table>
+                <tr>
+                    <th>Rekeningnummer</th>
+                    <th>Saldo</th>
+                </tr>
+                <tr th:each="BusinessAccount : ${listBusinessAccounts}">
+                    <td>
+                        <a th:href="@{businessAccountListHandlerForEmployee(id=${BusinessAccount.id})}"><span
+                                th:text="${BusinessAccount.iban}"/></a>
+                    </td>
+                    <td><a><span th:text="${BusinessAccount.balance}"/></a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

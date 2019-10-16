@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:Saldo="http://www.w3.org/1999/xhtml">
+<head>
+    <title>General Page for Fragments</title>
+    <th:block th:fragment="headerfiles">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/loggedIn.css}">
+    </th:block>
+
+    <script th:fragment="date-time-script">
+        function startTime() {
+            var today = new Date();
+            var d = today.getDate();
+            var mo = today.getMonth() + 1;
+            var y = today.getFullYear();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('date-time').innerHTML =
+                d + "-" + mo + "-" + y + " " + h + ":" + m + ":" + s;
+            var t = setTimeout(startTime, 500);
+        }
+
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i
+            }
+            ;
+            return i;
+        }
+    </script>
+</head>
+<body window.onload="startTime()">
+
+<div class="nav" th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <ul>
+        <li style="align:left" onClick="javascript:history.go(-1)">Terug</li>
+        <li><a href="index" class="link">Home</a></li>
+        <li><a href="logout" class="link">Logout</a></li>
+    </ul>
+</div>
+
+
+<div th:fragment="account-overview">
+    <div class="new-client-container">
+        <div class="w3-container">
+
+            <div class="transactions-table">
+                <h2>Rekeningoverzicht</h2>
+                <div class="account-info-block" th:fragment="account-info-block">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>
+                                Rekening<br>
+                                IBAN: <span th:text="${account.iban}"/><br>
+                                Op naam van: <span th:text="${account.getNameOwner()}"/><br>
+                                Overige rekeninghouders: <span
+                                    th:text="${account.getFullNameAccountOwnersExceptFirst()}"/><br>
+                                Saldo: &euro; <span th:text="${account.balance}"/><br>
+                                BIC:SOFANL2U<br>
+                                Datum & tijd: <span id="date-time"/><br>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <table style="width: 100%; padding: 60%;" th:fragment="transactions-table">
+                    <tr>
+                        <td>Datum</td>
+                        <td>Tegenrekening</td>
+                        <td>Naam</td>
+                        <td>Omschrijving</td>
+                        <td>Bedrag</td>
+                    </tr>
+                    <div th:unless="${#lists.isEmpty(account.transactions)}">
+                        <tr th:each="transaction,transactionStat : ${account.TransactionsbyDateAsc}" th:unless="${transactionStat.index > 9}">
+                            <td><span th:text="${transaction.date}"/></td>
+                            <td><span
+                                    th:text="${transaction.debitAccount.iban == account.iban} ? ${transaction.creditAccount.iban} : ${transaction.debitAccount.iban}"/>
+                            </td>
+                            <td><span th:text="${transaction.debitAccount.getNameOwner() == account.getNameOwner()} ? ${transaction.creditAccount.getNameOwner()} : ${transaction.debitAccount.getNameOwner()}"/></td>
+                            <td><span th:text="${transaction.description}"/>
+                            <td><span
+                                    th:text="${transaction.debitAccount.iban == account.iban} ? '- &euro; ' + ${transaction.amount} : '&euro; ' + ${transaction.amount}"/>
+                            </td>
+                        </tr>
+                    </div>
+                </table>
+                <form action="#" th:action="@{TransferHandler}" th:object="${account}" method="post">
+                    <input type=hidden th:field="${account.id}"/>
+                    <input type="submit" value="betaalopdracht"/>
+                </form>
+                <form action="#" th:action="@{ConnectAccount}" th:object="${account}" method="post">
+                    <input type="hidden" th:field="${account.id}" name="id" id="id"/>
+                    <input type="submit" value="Voeg rekeninghouder toe">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div th:fragment="footer" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <footer class="footer">
+        <div class="new-client-container">
+            <div class="form-container">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT
+                Work.
+                Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok & Aat
+                Niehot
+            </div>
+        </div>
+    </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:insert="general :: headerfiles"/>
+    <div th:insert="general :: date-time-script"/>
+    <title>Dashboard Client</title>
+</head>
+<body onload="startTime()">
+
+<div th:insert="general :: header"/>
+
+<div th:fragment="account-overview">
+    <div class="new-client-container">
+        <div class="w3-container">
+
+            <div class="transactions-table">
+                <h2>Rekeningoverzicht</h2>
+                <div class th:insert="general :: account-info-block"/>
+                <div class th:insert="general :: transactions-table"/>
+
+                <form action="#" th:action="@{transferHandler}" method="post">
+                    <input type=hidden th:field="${account.id}"/>
+                    <input type="submit" value="Maak een overboeking"/>
+                </form>
+                <div th:unless="${coupling}">
+                <div th:if="${account.owners.size()} < 2">
+                <form action="#" th:action="@{connectAccount}" th:object="${account}" method="post">
+                    <input type="hidden" th:field="${account.id}" name="id" id="id"/>
+                    <input type="submit" value="Voeg rekeninghouder toe"/>
+                </form>
+                </div>
+                </div>
+                <form action="#" th:action="@{backToClientView}" method="post">
+                    <input type="hidden" th:field="${sessionclient.id}" name="id" />
+                <input type="submit" value="Terug naar overzicht"/></form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

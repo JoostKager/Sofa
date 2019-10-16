@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:insert="general :: headerfiles"/>
+    <title>New Business Account</title>
+</head>
+<body>
+<div th:insert="general :: header"/>
+<div class="text-container">
+    <h1>Open een zakelijke rekening</h1>
+    <p th:text="|Hallo ${business.owner.firstName} ${business.owner.prefix} ${business.owner.lastName}.|"></p>
+    <p>Voor welk bedrijf wil je een zakelijke rekening openen.</p>
+    <p>Vul in onderstaand formulier de benodigde gegevens in om een nieuwe zakelijke rekening te openen.</p>
+</div>
+
+<div class="new-client-container">
+    <div class="form-container">
+        <form action="#" th:action="@{newBusiness}" th:object="${business}" method="post">
+            <table class="new-business-account-table">
+                <tr>
+                    <td>Naam bedrijf:</td>
+                    <td><input type="text" th:field="*{businessName}" style="width: 100%;" required></td>
+                </tr>
+                <tr>
+                    <td>Sector:</td>
+                    <td><select th:field="*{sector}">
+                        <option th:each="sector : ${T(team2.sofa.sofa.model.BusinessSector).values()}"
+                                th:value="${sector}" th:text="${sector.displayValue}"></option>
+                    </select></td>
+                </tr>
+            </table>
+            <input type="hidden" name="owner" id="owner" th:value="*{owner.id}"/>
+
+            <input type="submit" value="Open rekening"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>

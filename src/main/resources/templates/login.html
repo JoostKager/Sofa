@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Login voor klanten</title>
+    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+</head>
+<body>
+<div class="nav">
+    <ul>
+        <li><a href="index" class="link">Home</a></li>
+        <li><a href="login" class="link">Login</a></li>
+        <li><a href="nieuweklant" class="link">Nieuwe klant</a></li>
+        <li><a href="login_medewerker" class="link">Werknemers</a></li>
+    </ul>
+</div>
+
+<div class="text-container">
+    <h2>Sofa login pagina</h2>
+    <div th:unless="${fout == null}">
+        <p th:text="${fout}">foutmelding</p>
+    </div>
+</div>
+
+<div class="new-client-container">
+    <div class="form-container">
+        <form class="new_client" action="#" th:action="@{loginClientHandler}" th:object="${client}" method="post">
+            <table>
+                <tr>
+                    <td>Gebruikersnaam</td>
+                    <td><input type="text" th:field="*{username}" required
+                               oninvalid="this.setCustomValidity('Geef gebruikersnaam in')"
+                               oninput="setCustomValidity('')"/>
+
+
+                </tr>
+                <tr>
+                    <td>Wachtwoord</td>
+                    <td><input type="password" th:field="*{password}" required
+                               oninvalid="this.setCustomValidity('Geef uw wachtwoord in')"
+                               oninput="setCustomValidity('')"/>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input class="input-form" type="submit" value="Login"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="new-client-container">
+        <div class="form-container">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
+            Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok & Aat Niehot
+</div>
+</div>
+</footer>
+</body>
+</html>

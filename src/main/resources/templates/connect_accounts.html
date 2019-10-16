@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:insert="general :: headerfiles"/>
+    <title>Koppel Rekeninghouder</title>
+</head>
+<body>
+<div th:insert="general :: header"/>
+<div th:if="${acc}">
+    <div class="text-container">
+        <h1>Koppel nieuwe rekeninghouder aan rekening: <span th:text="${acc.iban}">rekening</span></h1>
+    </div>
+    <div class="new-client-container">
+        <div class="form-container">
+            <form action="#" th:action="@{connectForm}" method="post">
+                <table>
+                    <tr>
+                        <th>Gebruikersnaam</th>
+                        <th>Koppelcode</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="voer gebruikersnaam in" name="newuser" required="required">
+                        </td>
+                        <td><input type="text" placeholder="voer beveiligingscode in" name="accesscode"
+                                   pattern="^[0-9]{5}"
+                                   oninvalid="this.setCustomValidity('Voer een 5 cijferige code in')"
+                                   oninput="setCustomValidity('')" required="required">
+                        </td>
+                        <input type="hidden" th:value="${acc.iban}" name="bankaccount">
+                    </tr>
+                    <tr th:if="${wrong}">
+                        <td></td>
+                        <td th:text="${wrong}" style="color:red">foutmelding</td>
+                    </tr>
+                </table>
+                <input type="submit" value="Verzenden">
+            </form>
+        </div>
+    </div>
+</div>
+<div th:if="${con}">
+    <div class="text-container">
+        <h1>Koppel nieuwe rekeninghouder aan rekening: <span th:text="${con.iban}">rekening</span></h1>
+    </div>
+    <div class="new-client-container">
+        <div class="form-container">
+            <form action="#" th:action="@{connectValidate}" method="post">
+                <table>
+                    <tr>
+                        <td>IBAN</td>
+                        <td>Koppelcode</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="iban" th:value="${con.iban}" name="banknr"></td>
+                        <td><input type="text" placeholder="voer beveiligingscode in"
+                                   pattern="^[0-9]{5}" name="accesscode"
+                                   oninvalid="this.setCustomValidity('Voer een 5 cijferige code in')"
+                                   oninput="setCustomValidity('')"/></td>
+                        <input type="hidden" th:value="${con.id}" name="idconnect">
+                    </tr>
+                    <tr th:if="${wrong}">
+                        <td></td>
+                        <td th:text="${wrong}" style="color:red">foutmelding</td>
+                    </tr>
+                </table>
+                <input type="submit" value="Koppel rekening">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

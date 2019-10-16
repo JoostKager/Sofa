@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:insert="general :: headerfiles"/>
+    <title>wijzig Adressgegevens</title>
+</head>
+<body>
+<div th:insert="general :: header"/>
+<div class="text-container">
+    <h1>Wijzig uw adres gegevens</h1>
+</div>
+<div class="text-container" th:if="${error}">
+    <h2 th:text="${error}">foutmelding</h2>
+</div>
+<div class="new-client-container">
+    <div class="form-container">
+        <form action="#" th:action="@{changeAddress}" method="post">
+            <table>
+            <tr>
+                <td>Straatnaam:</td>
+                <td><input type="text" th:value="${address.street}" name="street" required/></td>
+            </tr>
+            <tr>
+                <td>Huisnummer:</td>
+                <td><input type="number" th:value="${address.houseNumber}" name="houseNumber" min="1" max="99144" required/></td>
+            </tr>
+            <tr>
+                <td>Postcode:</td>
+                <td><input type="text" th:value="${address.zipCode}" name="zipCode" required pattern="^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[A-Za-z]{2}$"/></td>
+            </tr>
+            <tr>
+                <td>Stad:</td>
+                <td><input type="text" th:value="${address.city}" name="city" required/></td>
+            </tr>
+            </table>
+            <input type="hidden" th:value="${clientId}" name="clientId">
+            <input type="submit" value="Wijzig gegevens">
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:insert="general :: headerfiles"/>
+    <title>Personal Page</title>
+</head>
+<body>
+
+<div th:insert="general :: header"/>
+<h1>Hallo, <span th:text="${sessionclient.getFullNameUser()}"/></h1>
+
+<div class="text-container">
+    <h2>Persoonlijke gegevens wijzigen</h2>
+</div>
+
+<div class="new-client-container">
+    <div class="form-container">
+        <form name="Persoonlijke pagina - Client" action="#" th:action="@{updateClient}" method="post">
+            <input type="hidden" th:value="${sessionclient.id}" name="id"/>
+            <table>
+                <tr>
+                    <td>Voornaam:</td>
+                    <td><input type="text" th:value="${sessionclient.firstName}" name="first" required/></td>
+                </tr>
+                <tr>
+                    <td>Tussenvoegsel:</td>
+                    <td><input type="text" th:value="${sessionclient.prefix}" name="prefix"/></td>
+                </tr>
+                <tr>
+                    <td>Achternaam:</td>
+                    <td><input type="text" th:value="${sessionclient.lastName}" name="last" required/></td>
+                </tr>
+                <tr>
+                    <td>Emailadres:</td>
+                    <td><input type="email" th:value="${sessionclient.email}" name="email"/></td>
+                </tr>
+                <tr>
+                    <td>Telefoonnummer:</td>
+                    <td><input type="text" th:value="${sessionclient.telephoneNr}" name="telephone"/></td>
+                </tr>
+                <tr>
+                    <td>Gebruikersnaam:</td>
+                    <td><input type="text" th:value="${sessionclient.username}" name="user" required/></td>
+                    <div th:if="${error}">
+                        <td th:text="${error}">al in gebruik</td>
+                    </div>
+                </tr>
+                <tr>
+                    <td>Wachtwoord</td>
+                    <td><input type="password" th:value="${sessionclient.password}" name="pass" required/></td>
+                </tr>
+            </table>
+            <input type="submit" value="Wijzig gegevens">
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:insert="general :: headerfiles"/>
+    <title>Employee View</title>
+</head>
+<body>
+​
+<div th:insert="general :: header"/>
+​
+<h1 style="text-align: left;">Welkom <span th:text="${sessionemployee.getFullNameUser()}"/></h1>
+
+<div class="grid-container">
+    <div class="top-ten-highest-tables">
+        ​
+        ​
+        <form action="#" th:action="@{accountOverviewHandler}" method="post"
+              onsubmit="return validateForm();">
+            <!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
+            <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
+                <h7>Rekeningen met het hoogste saldo</h7>
+                <table>
+                    ​
+                    <tr>
+                        <td>IBAN</td>
+                        <td>Naam</td>
+                        <td>Saldo</td>
+                    </tr>
+
+                    <tr th:each="PrivateAccount : ${tenHighestBalance}">
+                        <td>
+                            <a th:href="@{accountOverviewHandler(id=${PrivateAccount.id})}"><span
+                                    th:text="${PrivateAccount.iban}"/></a></td>
+                        <td><span th:text="${PrivateAccount.owners.get(0).getLastName()}"/></td>
+                        <td><span th:text="${PrivateAccount.balance}"/></td>
+                    </tr>
+                </table>
+            </div>
+
+            </tr>
+            </table>
+            ​​
+        </form>
+    </div>
+</div>
+</body>
+</html>
