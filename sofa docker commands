@@ -1,0 +1,9 @@
+
+creëer volume
+docker volume create sofadata
+maak Mysql container met binding naar volume
+docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=sofa -e MYSQL_USER=Sofa -e MYSQL_PASSWORD=password --volume=sofadata:/var/lib/mysql -d mysql:latest
+vul container met data
+docker exec -i mysql-db sh -c 'exec mysql -uroot -p"password"' < /src\main\resources\sofa.sql
+start applicatie container met link naar mysql container
+docker run -p 8080:8080 --name sofa --link mysql-db:mysql -d sofa
