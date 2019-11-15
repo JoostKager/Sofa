@@ -57,6 +57,7 @@
                 maar zeer binnenkort zullen we volledig operationeel zijn en nemen wij graag uw geld aan.
             </div>
         </main>
+        <div id="like_button_container"></div> 
 
         <div class="footer-div">
             <footer class="footer">
@@ -94,6 +95,13 @@
             setTimeout(showSlides, 6000); // Change image every 6 seconds
         }
     </script>
+    <!-- Load React. -->
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+  <!-- Load our React component. -->
+  <script th:src="@{like_button.js}"></script>
 
     <br>
 
