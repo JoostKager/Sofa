@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -42,12 +45,8 @@ public class LoginController {
     PasswordValidator passwordValidator;
     @Autowired
     ClientViewController clientViewController;
-
-    private final RestTemplate restTemplate;
-
-    public LoginController(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.build();
-    }
+    @Autowired
+    AceController ace;
 
     @GetMapping(value = "login")
     public String indexHandler(Model model) {
@@ -71,8 +70,10 @@ public class LoginController {
 
     @PostMapping(value = "loginClientHandler")
     public String loginClientHandler(Client client, Model model, RedirectAttributes redirectAttributes) {
-        Client c = createPost(client);
-        System.out.println(c);
+        String response = ace.getLogin(client);
+        System.out.println(response);
+        String post = ace.postLogin(client);
+        System.out.println("Post: "+ post);
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
             model.addAttribute("sessionclient", new Client());
@@ -107,33 +108,7 @@ public class LoginController {
         }
     }
 
-    public Client createPost(Client client) {
-        String url = "http://host.docker.internal:7800/loginapi/v1/login";
-    
-        // create headers
-        HttpHeaders headers = new HttpHeaders();
-        // set `content-type` header
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        // set `accept` header
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-    
-        // create a map for post parameters
-        Map<String, Object> map = new HashMap<>();
-        map.put("username", client.getUsername());
-        map.put("password", client.getPassword());
-    
-        // build the request
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map, headers);
-    
-        // send POST request
-        ResponseEntity<Client> response = this.restTemplate.postForEntity(url, entity, Client.class);
-    
-        // check response status code
-        if (response.getStatusCode() == HttpStatus.CREATED) {
-            return response.getBody();
-        } else {
-            return null;
-        }
-    }    
+
+        
 }
 
