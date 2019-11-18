@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 @Service
 @SessionAttributes({"nrBusiness", "nrPrivate", "sessionemployee"})
-public class Login {
+public class LoginService {
 
     @Autowired
     AccountDao accountDao;
@@ -33,7 +33,7 @@ public class Login {
     @Autowired
     ConnectorDao connectorDao;
     
-    public Login() {
+    public LoginService() {
         super();
     }
 

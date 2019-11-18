@@ -38,7 +38,7 @@ public class TopTenMostActiveClient {
 
     public String mostActiveClientBuilder(int id, Model model) {
         Client chosenClient = clientDao.findClientById(id);
-        Login.splitPrivateAndBusiness(chosenClient, model);
+        LoginService.splitPrivateAndBusiness(chosenClient, model);
         model.addAttribute("client", chosenClient);
         return "client_view_for_employee";
     }

@@ -2,7 +2,6 @@ package team2.sofa.sofa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.*;
 
@@ -20,7 +19,7 @@ public class Clientview {
     @Autowired
     BusinessDao businessDao;
     @Autowired
-    Login login;
+    LoginService loginService;
     @Autowired
     ConnectorDao connectorDao;
 

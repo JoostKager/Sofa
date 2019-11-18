@@ -10,7 +10,7 @@ import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Business;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.service.Clientview;
-import team2.sofa.sofa.service.Login;
+import team2.sofa.sofa.service.LoginService;
 
 
 @Controller
@@ -20,7 +20,7 @@ public class ClientViewController {
     @Autowired
     Clientview clientview;
     @Autowired
-    Login login;
+    LoginService loginService;
 
     /**
      * methode om elementen voor client_view.html te vullen.
@@ -31,9 +31,9 @@ public class ClientViewController {
     public void fillClientView(String username, Model model) {
         Client loggedInClient = clientview.findClientByUsername(username);
         model.addAttribute("sessionclient", loggedInClient);
-        login.checkAndLoadConnector(loggedInClient, model);
-        model.addAttribute("nrBusiness", login.countBusinessAccounts(loggedInClient));
-        model.addAttribute("nrPrivate", login.countPrivateAccounts(loggedInClient));
+        loginService.checkAndLoadConnector(loggedInClient, model);
+        model.addAttribute("nrBusiness", loginService.countBusinessAccounts(loggedInClient));
+        model.addAttribute("nrPrivate", loginService.countPrivateAccounts(loggedInClient));
         Hibernate.initialize(loggedInClient.getAccounts());
     }
 

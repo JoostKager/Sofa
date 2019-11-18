@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.service.ConnectingService;
-import team2.sofa.sofa.service.Login;
+import team2.sofa.sofa.service.LoginService;
 import team2.sofa.sofa.service.UpdateClient;
 
 import java.util.Map;
@@ -21,7 +21,7 @@ public class PersonalPageController {
     @Autowired
     UpdateClient updateClient;
     @Autowired
-    Login login;
+    LoginService loginService;
     @Autowired
     ConnectingService cs;
 

@@ -32,7 +32,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.Employee;
 import team2.sofa.sofa.model.EmployeeRole;
-import team2.sofa.sofa.service.Login;
+import team2.sofa.sofa.model.Login;
+import team2.sofa.sofa.service.LoginService;
 import team2.sofa.sofa.service.PasswordValidator;
 
 
@@ -40,13 +41,14 @@ import team2.sofa.sofa.service.PasswordValidator;
 @SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "sessionemployee"})
 public class LoginController {
     @Autowired
-    Login login;
+    LoginService loginService;
     @Autowired
     PasswordValidator passwordValidator;
     @Autowired
     ClientViewController clientViewController;
     @Autowired
     AceController ace;
+
 
     @GetMapping(value = "login")
     public String indexHandler(Model model) {
@@ -69,10 +71,10 @@ public class LoginController {
     }
 
     @PostMapping(value = "loginClientHandler")
-    public String loginClientHandler(Client client, Model model, RedirectAttributes redirectAttributes) {
-        String response = ace.getLogin(client);
+    public String loginClientHandler(Client client, Model model, Login login, RedirectAttributes redirectAttributes) {
+        String response = ace.getLogin(login);
         System.out.println(response);
-        String post = ace.postLogin(client);
+        String post = ace.postLogin(login);
         System.out.println("Post: "+ post);
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
@@ -93,7 +95,7 @@ public class LoginController {
         currentEmployee.setPassword(employee.getPassword());
         boolean loginOK = passwordValidator.validateEmployeePassword(currentEmployee);
         if (loginOK) {
-            Employee fullemployee = login.employeeLogin(currentEmployee, model);
+            Employee fullemployee = loginService.employeeLogin(currentEmployee, model);
             if (fullemployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
                 return "redirect:/loadEmployeeViewPrivate";
             }
