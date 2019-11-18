@@ -3,12 +3,18 @@ package team2.sofa.sofa.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Client extends User {
+public class Client extends User implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     @Column(unique = true)
     private String username;
     private String password;
