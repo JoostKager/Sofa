@@ -1,0 +1,115 @@
+<?xml version = "1.0"?>
+<project name = "Sofa Rollout" basedir = "." default = "info">
+<property file = "build.properties"/>
+<property name = "vstryout.dir" value = "vstryout"/>
+<property name = "sofa.dir" value = "sofa"/>
+
+
+
+
+
+   <target name = "info">
+      <echo>Sofa Rollout ${buildversion} with ANT</echo>
+   </target>
+	
+	<target name = "sofa_git" depends = "git_clone" description = "downloading sofa java app from git"> 
+		<exec executable = "git" >
+			<arg line = "clone https://github.com/joostkager/sofa" /> 
+		</exec>		
+	</target>
+
+   <target name = "git_init" description = "initializing git"> 
+      <exec executable = "git" >
+		<arg line = "init" />
+	  </exec>		
+   </target>
+
+   <target name = "git_clone"  depends = "git_init" description = "getting installer files from git"> 
+      <exec executable = "git" >
+		<arg line = "clone https://github.com/aatniehot/vstryout.git" />
+	  </exec>		
+   </target>
+   
+   <target name = "building_maven"  depends = ""> 
+      <exec dir="./sofa" executable = "cmd" >
+		<arg line="/c mvn package" />
+	  </exec>		
+   </target>
+
+<target name = "containerizing_sofa"  depends = "building_maven"> 
+      <exec dir="./sofa" executable = "docker" >
+		<arg line = "build -t sofa ." />
+	  </exec>		
+   </target>
+
+  
+      <target name = "mysql"  depends = ""> 
+      <exec dir="./sofa" executable = "kubectl" >
+		<arg line = "exec mysql-0 -- mysql -u root -p1234 exec &lt; sofa.sql" />
+	  </exec>		
+   </target>
+ 
+
+<target name = "mysql_pv"  depends = ""> 
+      <exec executable = "kubectl" >
+		<arg line = "apply -f ./vstryout/mysql/mysql-pv.yaml" />
+	  </exec>		
+   </target>
+   
+   <target name = "mysql_deployment"  depends = "mysql_pv">
+	  <exec executable = "docker" >
+		<arg line = "pull mysql:5.6" />
+	  </exec>
+      <exec executable = "kubectl" >
+		<arg line = "apply -f ./vstryout/mysql/mysql-deployment.yaml" />
+	  </exec>		
+   </target>
+   
+   <target name = "sofa_deployment"  depends = ""> 
+      <exec executable = "kubectl" >
+		<arg line = "apply -f ./vstryout/sofa/sofa.yaml" />
+	  </exec>
+	  <exec executable = "kubectl" >
+	    <arg line = "apply -f ./vstryout/sofa/sofa-service.yaml" />
+	  </exec>
+   </target>
+   
+   <target name = "mysql_insert" depends = "">
+		<exec executable = "cmd">
+			<arg line = "Get-Content sofa/sofa.sql | kubectl exec -i mysql-0 -- mysql -u root -p1234" />
+		</exec>
+	</target>
+   
+   
+	<target name = "remove_git_maps" description = "removing installation files" > 
+	<delete dir = "${vstryout.dir}"/>
+	<delete dir = "${sofa.dir}"/>
+   </target>
+   
+   <target name = "remove_sofa" description = "removing sofa containers" > 
+	  <exec executable = "kubectl" >
+		<arg line = "delete service sofa-service" />
+	  </exec>
+	  <exec executable = "kubectl" >
+	    <arg line = "delete deployment sofa" />
+	  </exec>
+   </target>
+   
+   <target name = "remove_mysql" description = "removing mysql containers" > 
+	  <exec executable = "kubectl" >
+		<arg line = "delete service mysql" />
+	  </exec>
+	  <exec executable = "kubectl" >
+	    <arg line = "delete statefulsets --all" />
+	  </exec>
+   </target>
+   
+
+	<target name = "install" description = "going through all installation steps" depends = "sofa_git, containerizing_sofa, mysql_deployment, sofa_deployment, mysql_insert, remove_git_maps" >
+	  <echo> Build completed for sofa containers </echo>
+	</target> 
+
+    <target name = "remove" description = "going through all removal steps" depends = "remove_sofa, remove_mysql" >
+	  <echo> Removal completed for sofa containers </echo>
+	</target> 
+</project>
