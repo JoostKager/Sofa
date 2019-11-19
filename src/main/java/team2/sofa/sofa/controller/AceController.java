@@ -24,20 +24,20 @@ public class AceController {
     @Autowired
     RestTemplate restTemplate;
 
-    public String getLogin(Login login){
-    String url = "http://localhost:7800/loginapi/v1/login?user="+login.getUsername()+"&pass="+login.getPassword();
+    public String getLogin(Client client){
+    String url = "http://localhost:7800/loginapi/v1/login?user="+client.getUsername()+"&pass="+client.getPassword();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Client> entity = new HttpEntity<Client>(headers);
         return restTemplate.exchange(url, HttpMethod.GET, entity, String.class).getBody();
     }
-    public String postLogin(Login login) {
+    public String postLogin(Client client) {
         String url = "http://localhost:7800/loginapi/v1/login";
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         Map<String, Object> map = new HashMap<>();
-        map.put("username", login.getUsername());
-        map.put("password", login.getPassword());
+        map.put("username", client.getUsername());
+        map.put("password", client.getPassword());
     
         // build the request
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map, headers);

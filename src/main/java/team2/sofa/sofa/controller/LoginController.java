@@ -72,9 +72,9 @@ public class LoginController {
 
     @PostMapping(value = "loginClientHandler")
     public String loginClientHandler(Client client, Model model, Login login, RedirectAttributes redirectAttributes) {
-        String response = ace.getLogin(login);
+        String response = ace.getLogin(client);
         System.out.println(response);
-        String post = ace.postLogin(login);
+        String post = ace.postLogin(client);
         System.out.println("Post: "+ post);
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
