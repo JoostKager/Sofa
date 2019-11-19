@@ -32,7 +32,7 @@ public class AceController {
         return restTemplate.exchange(url, HttpMethod.GET, entity, String.class).getBody();
     }
     public String postLogin(Login login) {
-        String url = "http://host.docker.internal:7800/loginapi/v1/login";
+        String url = "http://localhost:7800/loginapi/v1/login";
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         Map<String, Object> map = new HashMap<>();
