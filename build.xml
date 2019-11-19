@@ -45,7 +45,7 @@
   
       <target name = "mysql"  depends = ""> 
       <exec dir="./sofa" executable = "kubectl" >
-		<arg line = "exec mysql-0 -- mysql -u root -p1234 exec &lt; sofa.sql" />
+		<arg line = "exec mysql-0 -- mysql -u root -p1234 &lt; sofa.sql" />
 	  </exec>		
    </target>
  
@@ -76,7 +76,7 @@
    
    <target name = "mysql_insert" depends = "">
 		<exec executable = "cmd">
-			<arg line = "Get-Content sofa/sofa.sql | kubectl exec -i mysql-0 -- mysql -u root -p1234" />
+			<arg line = "Get-Content sofa-new/sofa.sql | kubectl exec -i mysql-0 -- mysql -u root -p1234" />
 		</exec>
 	</target>
    

@@ -25,7 +25,7 @@ public class AceController {
     RestTemplate restTemplate;
 
     public String getLogin(Login login){
-    String url = "http://host.docker.internal:7800/loginapi/v1/login?user="+login.getUsername()+"&pass="+login.getPassword();
+    String url = "http://localhost:7800/loginapi/v1/login?user="+login.getUsername()+"&pass="+login.getPassword();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Client> entity = new HttpEntity<Client>(headers);
